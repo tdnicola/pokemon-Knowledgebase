@@ -18,13 +18,13 @@ li {
   border-radius: 8px;
 }
 
-button {
+/* button {
   background: none;
   color: white;
   border: none;
   cursor: pointer;
   font-size: 16px;
-}
+} */
 
 .pokemonNames {
   background-color: #f44245;
