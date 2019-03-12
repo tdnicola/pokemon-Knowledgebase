@@ -16,11 +16,8 @@ var pokemonRepository = (function () {
     var $button = $('<button type="button">' + pokemon.name + '</button>')
     $ul.append($li)
     $li.append($button)
-
-    // add modal to button. Not set up yet
-    // $button.on('click'. function (event) {
-    //   addmodal
-    // })
+    //modal not working
+    $button.on('click', function (e) { modalWork.showModal(pokemon) })
   }
 
   function loadList () {
@@ -42,11 +39,12 @@ var pokemonRepository = (function () {
       response.results.forEach(function (details) {
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
-        item.types = details.types.map(function (item) {return item.type.name})
+        item.types = details.types.map(function (item) { return item.type.name })
       })
+    }).catch(function (e) {
+      console.error(e)
     })
   }
-
 
   return {
     loadList: loadList,
@@ -54,6 +52,45 @@ var pokemonRepository = (function () {
     addListItem: addListItem,
     getAll: getAll
   }
+})
 
+// not a function?
+// pokemonRepository.loadList().then(function () {
+//   pokemonRepository.getAll().forEach(function (pokemon) {
+//     pokemonRepository.addListItem(pokemon);
+//     pokemonRepository.loadDetails(pokemon)
+//   });
+// });
 
+var modalWork = (function() {
+  var $modalContainer = $('#modal-container')
+
+  function showModal (pokemon) {
+    // Clear existing text
+    $modalContainer.innerText = ''
+
+    var $modal = ('<div></div>')
+    $modal.addClass('modal')
+
+    var $closeButtonElement = $('<button></button>')
+    $closeButtonElement.classList.add('modal-close').innerText = 'Close Meh';
+    $closeButtonElement.on('click', hideModal)
+
+    var $titleElement = $('<h1> title </h1>');
+    var $contentElement = $('main info');
+
+    $modal.append($closeButtonElement).append($titleElement).append(contentElement)
+    $modalContainer.append($modal)
+
+    $modalContainer.classlist.add('is-visible')
+  }
+
+  function hideModal () {
+    $modalContainer.classlist.remove('is-visible')
+  }
+
+  return {
+    showModal: showModal,
+    hideModal: hideModal
+  }
 })
