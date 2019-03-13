@@ -37,10 +37,9 @@ var pokemonRepository = (function () {
   function loadDetails (item) {
     return $.ajax(item.detailsUrl).then(function (response) {
 
-        item.imageUrl = response.sprites.front_default;
-        item.height = response.height;
-        item.types = response.types.map(function (item) { return item.type.name })
-
+      item.imageUrl = response.sprites.front_default;
+      item.height = response.height;
+      item.types = response.types.map(function (item) { return item.type.name })
     }).catch(function (e) {
       console.error(e)
     })
@@ -62,7 +61,7 @@ pokemonRepository.loadList().then(function () {
   });
 });
 
-var modalWork = (function() {
+var modalWork = (function () {
   var $modalContainer = $('#modal-container')
 
   function showModal (pokemon) {
@@ -70,15 +69,14 @@ var modalWork = (function() {
     $modalContainer.innerText = ''
 
     // creating div
-    var $modal = $('<div></div>')
-    $modal.addClass('modal')
+    var $modal = $('<div class="modal"></div>')
 
-    //creating close button inside box
-    var $closeButtonElement = $('<button></button>')
-    $closeButtonElement.add('modal-close').innerText = 'Close Meh';
+    // creating close button inside box
+    var $closeButtonElement = $('<button>X</button>')
+    $closeButtonElement.addClass('modal-close')
     $closeButtonElement.on('click', hideModal)
 
-    var $titleElement = $('<h1> title </h1>');
+    var $titleElement = $('<h1>' + pokemon.name + '</h1>');
     var $contentElement = $('main info');
 
     $modal.append($closeButtonElement).append($titleElement).append($contentElement)
@@ -90,6 +88,19 @@ var modalWork = (function() {
   function hideModal () {
     $modalContainer.removeClass('is-visible')
   }
+
+  // closing window with escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && $modalContainer.hasClass('is-visible')) {
+      hideModal();
+    }
+  });
+
+  $modalContainer.on('click', function (event) {
+    if ($(event.target).is($modalContainer)) {
+      hideModal();
+    }
+  });
 
   return {
     showModal: showModal,
