@@ -52,7 +52,6 @@ var pokemonRepository = (function () {
     getAll: getAll
   }
 })()
-
 // not a function?
 pokemonRepository.loadList().then(function () {
   pokemonRepository.getAll().forEach(function (pokemon) {
@@ -61,26 +60,37 @@ pokemonRepository.loadList().then(function () {
   });
 });
 
-var modalWork = (function () {
+var modalWork = (function (item) {
   var $modalContainer = $('#modal-container')
+
+  function createModal () {
+    var $modal = $('<div class="modal"></div>')
+
+    var $closeButtonElement = $('<button>X</button>')
+    $closeButtonElement.addClass('modal-close')
+    $closeButtonElement.on('click', hideModal)
+
+
+    var $titleElement = $('<h1>' + '</h1>'); // insert pokemone name and height....
+    var $contentElement = $('main info');
+
+    $modal
+      .append($closeButtonElement)
+      .append($contentElement)
+      .append($titleElement)
+    $modalContainer.append($modal)
+  }
 
   function showModal (pokemon) {
     // Clear existing text
     $modalContainer.innerText = ''
 
     // creating div
-    var $modal = $('<div class="modal"></div>')
 
     // creating close button inside box
-    var $closeButtonElement = $('<button>X</button>')
-    $closeButtonElement.addClass('modal-close')
-    $closeButtonElement.on('click', hideModal)
 
-    var $titleElement = $('<h1>' + pokemon.name + '</h1>');
-    var $contentElement = $('main info');
-
-    $modal.append($closeButtonElement).append($titleElement).append($contentElement)
-    $modalContainer.append($modal)
+    // $modal.append($closeButtonElement).append($titleElement).append($contentElement)
+    // $modalContainer.append($modal)
 
     $modalContainer.addClass('is-visible')
   }
@@ -104,6 +114,9 @@ var modalWork = (function () {
 
   return {
     showModal: showModal,
-    hideModal: hideModal
+    hideModal: hideModal,
+    createModal: createModal
   }
 })()
+
+modalWork.createModal();
