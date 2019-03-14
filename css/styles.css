@@ -1,3 +1,6 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
 h1 {
   width: 400px;
   text-align: center;
@@ -44,7 +47,7 @@ button {
   display: inline-block;
   box-sizing: border-box;
   background: #FFDE00;
-  /* margin-left: 350px; /*  modal left side margin */ */
+  /* margin-left: 350px; /*  modal left side margin */
   padding: 15px;
   max-width: 700px;
   text-align: left;

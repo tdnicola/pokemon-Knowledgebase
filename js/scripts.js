@@ -16,10 +16,10 @@ var pokemonRepository = (function () {
     var $button = $('<button type="button">' + pokemon.name + '</button>')
     $ul.append($li)
     $li.append($button)
-    //modal not working
     $button.on('click', function (e) { modalWork.showModal(pokemon) })
   }
 
+  // loading the main pokemon name and details url
   function loadList () {
     return $.ajax(apiUrl).then(function (response) {
       response.results.forEach(function (item) {
@@ -34,9 +34,9 @@ var pokemonRepository = (function () {
     })
   }
 
+  // loading the details into pokemon
   function loadDetails (item) {
     return $.ajax(item.detailsUrl).then(function (response) {
-
       item.imageUrl = response.sprites.front_default;
       item.height = response.height;
       item.types = response.types.map(function (item) { return item.type.name })
@@ -64,10 +64,6 @@ var modalWork = (function (item) {
   var $modalContainer = $('#modal-container')
 
   function showModal (pokemon) {
-    // Clear existing text
-    $modalContainer.innerText = ''
-
-    // creating div
     var $modal = $('<div class="modal"></div>')
 
     // creating close button inside box
@@ -75,15 +71,16 @@ var modalWork = (function (item) {
     $closeButtonElement.addClass('modal-close')
     $closeButtonElement.on('click', hideModal)
 
+    // pokemon content inside div elements
     var $titleElement = $('<h1>' + pokemon.name + '</h1>');
-    var $contentElement = $('Pokemon Height:' + pokemon.height + '<p>' + '<img src="' + pokemon.imageUrl + '">' + '</p>');
-
-    $modal.append($closeButtonElement).append($titleElement).append($contentElement)
-    $modalContainer.append($modal)
-
-    $modalContainer.addClass('is-visible')
+    var $contentElement = $('<div></div>');
+    $contentElement.html('<br>' + 'Pokemon Types: ' + pokemon.types + '<br>' + '<img src="' + pokemon.imageUrl + '">')
+    $modal.append($closeButtonElement).append($titleElement).append($contentElement);
+    $modalContainer.append($modal);
+    $modalContainer.addClass('is-visible');
   }
 
+  // removes modal class
   function hideModal () {
     $modalContainer.removeClass('is-visible')
     $modalContainer.empty()
@@ -96,6 +93,7 @@ var modalWork = (function (item) {
     }
   });
 
+  // clicking outside of the modal to close.
   $modalContainer.on('click', function (event) {
     if ($(event.target).is($modalContainer)) {
       hideModal();
@@ -108,5 +106,3 @@ var modalWork = (function (item) {
     // createModal: createModal
   }
 })()
-
-// modalWork.createModal();
