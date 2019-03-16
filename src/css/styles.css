@@ -1,6 +1,7 @@
 body {
   font-family: 'Open Sans', sans-serif;
 }
+
 h1 {
   width: 400px;
   text-align: center;
@@ -27,6 +28,7 @@ button {
   border: none;
   cursor: pointer;
   font-size: 16px;
+  text-transform: capitalize;
 }
 
 .pokemonNames {
@@ -47,9 +49,8 @@ button {
   display: inline-block;
   box-sizing: border-box;
   background: #FFDE00;
-  /* margin-left: 350px; /*  modal left side margin */
   padding: 15px;
-  max-width: 700px;
+  max-width: 500px;
   text-align: left;
   border-radius: 8px;
 }
