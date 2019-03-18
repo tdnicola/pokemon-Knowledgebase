@@ -7,7 +7,10 @@ h1 {
   text-align: center;
   margin: auto;
 }
-
+input {
+  margin: 5px;
+  float: right;
+}
 ul {
   list-style-type: none;
 }
@@ -32,11 +35,14 @@ button {
 }
 
 .pokemonNames {
-  background-color: #f44245;
+  background-image: url("../../img/pokeRed.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
   border-radius: 8px;
   margin: auto;
   padding: 10px;
-  width: 75%;
+  width: 85%;
 }
 
 /* modal workings- old */
@@ -50,7 +56,7 @@ button {
   box-sizing: border-box;
   background: #FFDE00;
   padding: 15px;
-  max-width: 500px;
+  max-width: 600px;
   text-align: left;
   border-radius: 8px;
 }
