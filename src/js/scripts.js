@@ -1,22 +1,22 @@
 var pokemonRepository = (function () {
-  var repository = []
+  var repository = [];
   var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
-  function add (pokemon) {
-    repository.push(pokemon)
+  function add(pokemon) {
+    repository.push(pokemon);
   }
 
-  function getAll () {
+  function getAll() {
     return repository;
   }
 
-  function addListItem (pokemon) {
-    var $ul = $('ul')
-    var $li = $('<li class="pokemonName"></li>')
-    var $button = $('<button type="button">' + pokemon.name + '</button>')
-    $ul.append($li)
-    $li.append($button)
-    $button.on('click', function (e) { modalWork.showModal(pokemon) })
+  function addListItem(pokemon) {
+    var $ul = $('ul');
+    var $li = $('<li class="pokemonName"></li>');
+    var $button = $('<button type="button">' + pokemon.name + '</button>');
+    $ul.append($li);
+    $li.append($button);
+    $button.on('click', function (e) { modalWork.showModal(pokemon); });
   }
 
   // loading the main pokemon name and details url
@@ -25,13 +25,13 @@ var pokemonRepository = (function () {
       response.results.forEach(function (item) {
         var pokemon = {
           name: item.name,
-          detailsUrl: item.url
-        }
-        add(pokemon)
-      })
+          detailsUrl: item.url,
+        };
+        add(pokemon);
+      });
     }).catch(function (e) {
-      console.error(e)
-    })
+      console.error(e);
+    });
   }
 
   // loading the details into pokemon
@@ -39,24 +39,26 @@ var pokemonRepository = (function () {
     return $.ajax(item.detailsUrl).then(function (response) {
       item.imageUrl = response.sprites.front_default;
       item.height = response.height;
-      item.types = response.types.map(function (item) { return item.type.name })
+
+      // item.forms = response.forms.map(function (item) {return item.type}); // return killing this?
+      item.types = response.types.map(function (item) { return item.type.name; });
     }).catch(function (e) {
-      console.error(e)
-    })
+      console.error(e);
+    });
   }
 
   return {
     loadList: loadList,
     loadDetails: loadDetails,
     addListItem: addListItem,
-    getAll: getAll
-  }
-})()
-// not a function?
+    getAll: getAll,
+  };
+})();
+
 pokemonRepository.loadList().then(function () {
   pokemonRepository.getAll().forEach(function (pokemon) {
     pokemonRepository.addListItem(pokemon);
-    pokemonRepository.loadDetails(pokemon)
+    pokemonRepository.loadDetails(pokemon);
   });
 });
 
@@ -74,6 +76,7 @@ var modalWork = (function (item) {
     var $titleElement = $('<h1 class="title"></h1>');
     var $contentElement = $('<div class="content"></div>');
 
+    // attach info to modal
     $modal.append($closeButtonElement).append($titleElement).append($contentElement);
     $modalContainer.append($modal);
   }
@@ -90,7 +93,8 @@ var modalWork = (function (item) {
       '<br>' +
       '<img src="' +
       pokemon.imageUrl +
-      '">'
+      '">' +
+      pokemon.forms
     );
     $modalContainer.addClass('is-visible');
   }
@@ -122,3 +126,12 @@ var modalWork = (function (item) {
     createModal: createModal,
   };
 })();
+
+$(document).ready(function () {
+  $('#myInput').on('keydown', function () {
+    var value = $(this).val().toLowerCase();
+    $('.pokemonName').filter(function () {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+    });
+  });
+});
