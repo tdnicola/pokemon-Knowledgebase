@@ -1,5 +1,10 @@
 body {
   font-family: 'Open Sans', sans-serif;
+  background-image: url("../../img/background.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 }
 
 h1 {
@@ -19,7 +24,7 @@ li {
   margin: 25px;
   background-color: #5a90ed;
   border: 1px solid black;
-  width: 175px;
+  width: 250px;
   height: 30px;
   text-align: center;
   border-radius: 8px;
@@ -42,7 +47,8 @@ button {
   border-radius: 8px;
   margin: auto;
   padding: 10px;
-  width: 85%;
+  width: 75%;
+  opacity: 0.85;
 }
 
 /* modal workings- old */
@@ -54,11 +60,12 @@ button {
   margin: auto;
   display: inline-block;
   box-sizing: border-box;
-  background: #FFDE00;
+  background-image: url("../../img/yellow.jpeg");
   padding: 15px;
   max-width: 600px;
   text-align: left;
   border-radius: 8px;
+  text-transform: capitalize;
 }
 
 .modal-close {
