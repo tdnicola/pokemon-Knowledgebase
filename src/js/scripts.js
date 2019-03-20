@@ -62,7 +62,7 @@ pokemonRepository.loadList().then(function () {
   });
 });
 
-var modalWork = (function (item) {
+var modalWork = (function () {
   var $modalContainer = $('#modal-container');
 
   function createModal() {
