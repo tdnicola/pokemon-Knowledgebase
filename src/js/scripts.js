@@ -40,9 +40,11 @@ var pokemonRepository = (function () {
       item.imageUrl = response.sprites.front_default;
       item.height = response.height;
       // item.forms = response.form;
-      // console.log(item.forms);
-      // item.forms = response.forms.map(function (item) {return item.forms.name}); // return killing this?
-      item.types = response.types.map(function (item) { return item.type.name;});
+      // console.log(response.forms);
+      //
+      item.moves = response.moves.map(function (item) {return '<br> ' + item.move.name;});
+      // console.log("types: " + response.types) // return killing this?
+      item.types = response.types.map(function (item) {return ' ' + item.type.name;});
     }).catch(function (e) {
       console.error(e);
     });
@@ -98,8 +100,9 @@ var modalWork = (function (item) {
       '<br>' +
       'Pokemon Height: ' +
       pokemon.height +
-      '<br>' +
-      pokemon.forms
+      '<br> <br>' +
+      'Pokemon Moves: ' +
+      pokemon.moves
     );
     $modalContainer.addClass('is-visible');
   }
